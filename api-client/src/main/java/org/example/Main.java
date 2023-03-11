@@ -31,7 +31,7 @@ public class Main {
                     handlePut(inp, httpClient);
                 }
                 else if (method.equalsIgnoreCase("post")) {
-                    handlePost(inp);
+                    handlePost(inp, httpClient);
                 }
                 else if (method.equalsIgnoreCase("q")) {
                     clientRun = false;
@@ -54,14 +54,15 @@ public class Main {
         readResponse(httpClient, request);
     }
 
-    private static void handlePost(BufferedReader inp) throws IOException {
+    private static void handlePost(BufferedReader inp, CloseableHttpClient httpClient) throws IOException {
         String path = getFullRelativePath(inp);
         System.out.println("Provide json body");
         String json = inp.readLine();
         StringEntity entity = new StringEntity(json);
-        HttpPost httpPost = new HttpPost(path);
-        httpPost.setHeader("Content-type", "application/json");
-        httpPost.setHeader("Content-length", Integer.toString(json.length()));
+        entity.setContentType("application/json");
+        HttpPost httpPost = new HttpPost(apiBasePath + path);
+        httpPost.setEntity(entity);
+        readResponse(httpClient, httpPost);
     }
 
     private static void readResponse(CloseableHttpClient httpClient, HttpRequestBase request) throws IOException {
