@@ -14,7 +14,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 public class Main {
 
-    public static String apiBasePath = "http://localhost:8080";
+    public static String apiBasePath = "http://localhost:8080/api";
 
     public static boolean clientRun = true;
     public static void main(String[] args) {
